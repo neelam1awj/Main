@@ -1,0 +1,102 @@
+----> Schema Design for Employee Management System
+
+---->1.Employee Table:
+
+     CREATE TABLE employee (
+     id int AUTO_INCREMENT PRIMARY KEY,
+     name varchar(50),
+     department_id int,
+     salary decimal(10, 2),
+     join_date date NOT NULL,
+     FOREIGN KEY (department_id) REFERENCES Departments(dept_id)
+);
+
+ desc employee;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| id            | int           | NO   | PRI | NULL    | auto_increment |
+| department_id | int           | YES  | MUL | NULL    |                |
+| salary        | decimal(10,2) | YES  |     | NULL    |                |
+| join_date     | date          | NO   |     | NULL    |                |
+| name          | varchar(50)   | YES  |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+
+
+----> 2. Departments Table:
+      
+      CREATE TABLE departments (
+      dept_id int AUTO_INCREMENT PRIMARY KEY,
+      dept_name varchar(50) NOT NULL
+);
+
+ desc departments;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| dept_id   | int         | NO   | PRI | NULL    | auto_increment |
+| dept_name | varchar(50) | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+
+
+----> 3. Roles Table:
+      CREATE TABLE roles (
+      role_id INT AUTO_INCREMENT PRIMARY KEY,
+      role_name VARarchar(50) NOT NULL,
+      description text
+);
+
+ desc roles;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| role_id     | int         | NO   | PRI | NULL    | auto_increment |
+| role_name   | varchar(50) | NO   |     | NULL    |                |
+| description | text        | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+
+
+----> 4. Attendance Table
+      CREATE TABLE attendance (
+      attendance_id int AUTO_INCREMENT PRIMARY KEY,
+      employee_id int,
+      date date NOT NULL,
+      status VARCHAR(10) NOT NULL CHECK (status IN ('Present', 'Absent')),
+      FOREIGN KEY (employee_id) REFERENCES Employee(id)
+);
+
+
+mysql> desc attendance;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| attendance_id | int         | NO   | PRI | NULL    | auto_increment |
+| employee_id   | int         | YES  | MUL | NULL    |                |
+| date          | date        | NO   |     | NULL    |                |
+| status        | varchar(10) | NO   |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+
+
+----> 5. Projects Table
+      CREATE TABLE projects (
+      project_id int AUTO_INCREMENT PRIMARY KEY,
+      project_name VARCHAR(50) NOT NULL,
+      start_date date NOT NULL,
+      end_date date,
+      manager_id int,
+      FOREIGN KEY (manager_id) REFERENCES Employees(id)
+);
+
+ desc projects;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| project_id   | int         | NO   | PRI | NULL    | auto_increment |
+| project_name | varchar(50) | NO   |     | NULL    |                |
+| start_date   | date        | NO   |     | NULL    |                |
+| end_date     | date        | YES  |     | NULL    |                |
+| manager_id   | int         | YES  | MUL | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+
+
+
